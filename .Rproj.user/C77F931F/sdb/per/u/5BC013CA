@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "require(lavaan)\nrequire(semPlot)\nrequire(mediationPlot)\nmodel <- '\n   # latent variables\nind60 =~ x1 + x2 + x3\ndem60 =~ y1 + y2 + y3 + y4\ndem65 =~ y5 + y6 + y7 + y8\n# regressions\ndem60 ~ ind60\ndem65 ~ ind60 + dem60\n'\nfit <- sem(model,\n           data=PoliticalDemocracy)\nsummary(fit)\nsemPaths(fit)\nmediationPlot(fit,whatLabels = \"name\")\n\nset.seed(1234)\nX1 <- rnorm(100)\nX2 <- c(rnorm(50),rnorm(50))\nM1 <- 0.5*X1 + 0.5*X2 +rnorm(100)\nM2 <-0.6*X1 +0.4*X2+rnorm(100)\nY1 <- 0.3*M1 + 0.4*M2 + rnorm(100)\nY2 <- 0.7*M1 + 0.1*M2 + rnorm(100)\ndata <- data.frame(X1 = X1, X2 = X2, Y1 = Y1, Y2 = Y2,M1 = M1, M2 = M2)\nstr(data)",
+    "created" : 1483064959795.000,
+    "dirty" : true,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "1824341678",
+    "id" : "5BC013CA",
+    "lastKnownWriteTime" : 8028075770725269510,
+    "last_content_update" : 1483070904370,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

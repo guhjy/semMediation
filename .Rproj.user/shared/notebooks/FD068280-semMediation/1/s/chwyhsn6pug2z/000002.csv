@@ -1,0 +1,7 @@
+"0","cat(mediationModel)
+"
+"1","# Mediation Effect
+intervention~b1*empathy+c1*knowledge
+empathy~a1*knowledge
+ind1:=a1*b1
+total1:=c1+a1*b1"

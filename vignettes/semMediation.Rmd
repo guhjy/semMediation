@@ -1,0 +1,228 @@
+---
+title: "Package semMediation"
+author: "Keon-Woong Moon"
+date: "2016-08-07"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+Package semMediation is an extension of package lavaan. The main functions of package semMediation are as follows:
+
+1. makeEquation() : support function to make a mediation equations easily for lavaan.
+2. mediationPlot() : visualize the mediation effects
+
+## Installation
+
+You can install `semMediation` package via github.
+
+
+```{r,eval=FALSE}
+install.packages("devtools")
+devtools::install_github("cardiomoon/semMediation")
+```
+
+## makeEquation()
+
+Consider a classical mediation setup with four variables: Y1 is the dependent variable, X1 is the predictor and M1 and M2 are mediators. For illustration, we create a toy dataset containing these variables, and fit a path analysis model that includes the direct effect of X1 on Y1 and the indirect effect of X1 on Y1 via M1 or M2 and second indirect effect via M1 and M2.
+
+
+```{r,comment=NA}
+set.seed(1234)
+X1 <- rnorm(100)
+X2 <- c(rnorm(50),rnorm(50))
+M1 <- 0.5*X1 + 0.5*X2 +rnorm(100)
+M2 <-0.6*X1 +0.4*X2+rnorm(100)
+Y1 <- 0.3*M1 + 0.4*M2 + rnorm(100)
+Y2 <- 0.1*M1 + 0.5*M2 + rnorm(100)
+
+data <- data.frame(X1 = X1, X2 = X2, Y1 = Y1, Y2 = Y2, M1 = M1, M2 = M2)
+str(data)
+```
+
+
+To make a mediatino equation, you can use makeEquation() function.
+
+
+```{r,comment=NA,message=FALSE}
+require(lavaan)
+require(semPlot)
+require(semMediation)
+require(ggplot2)
+
+model=makeEquation(X="X1",M=c("M1","M2"),Y="Y1")
+cat(model)
+fit=sem(model,data=data)
+summary(fit)
+```
+
+
+To visualize model, you can use semPaths() function from semPlot package. But, semPaths() function is inappropriate for models with two or more mediators.
+
+
+```{r,fig.width=9,fig.height=7}
+#par(family="NanumGothic")
+semPaths(fit,rotation=2,whatLabels = "std")
+```
+
+mediationPlot() can visualize models with multiple mediators, multiple independent variables and/or multiple dependent variables.
+
+
+```{r,fig.width=9,fig.height=7}
+mediationPlot(fit)
+```
+
+You can show standardized parameter estimates(default) or parameter estimates(est), or names(name) by settting the parameter "whatLabels".
+
+```{r,fig.width=9,fig.height=7}
+mediationPlot(fit,whatLabels = "name")
+mediationPlot(fit,whatLabels = "est")
+```
+
+You can visualize indirect effects of this model. 
+```{r,fig.width=9,fig.height=7}
+mediationPlot(fit,regression=FALSE,residuals=FALSE,indirect=TRUE)
+```
+
+You can also visualize secondary indirect effect of this model. 
+
+
+```{r,fig.width=9,fig.height=7}
+mediationPlot(fit,regression=FALSE,residuals=FALSE,secondIndirect=TRUE)
+```
+
+##  More example
+
+You can extend model with two predictors, two mediators and one response variable.
+
+```{r,comment=NA}
+model=makeEquation(X=c("X1","X2"),M=c("M1","M2"),Y="Y1")
+cat(model)
+fit=sem(model,data=data)
+```
+```{r,fig.width=9,fig.height=7}
+semPaths(fit)
+mediationPlot(fit)
+```
+
+##  Example 3
+
+You can extend model with two predictors, two mediators and two response variables.
+
+```{r,comment=NA}
+model=makeEquation(X=c("X1","X2"),M=c("M1","M2"),Y=c("Y1","Y2"))
+cat(model)
+fit=sem(model,data=data)
+```
+```{r,fig.width=9,fig.height=7}
+semPaths(fit)
+mediationPlot(fit)
+```
+
+## Example 4
+
+```{r,fig.width=9,fig.height=7}
+model <- '
+   # latent variables
+     ind60 =~ x1 + x2 + x3
+     dem60 =~ y1 + y2 + y3 + y4
+     dem65 =~ y5 + y6 + y7 + y8
+   # regressions
+     dem60 ~ ind60
+     dem65 ~ ind60 + dem60
+'
+fit <- sem(model,
+           data=PoliticalDemocracy)
+semPaths(fit,rotation=2,whatLabels = "std",groups="manlat",pastel=TRUE)
+mediationPlot(fit)
+```
+
+## Example 5 
+
+Next example is about the teacher's intervention for students with ADHD. The ADHD data contained in semMediation package is a dataset contains measures about the teacher's knowlege, empathy and intervention about attention-deficit hyperactivity disorder(ADHD).(Source:Effects of teacher's knowledge and empathy on educational intervention for ADHD: Focused on the mediating effet of empathy. J Korean Acad Psychiatr Ment Health Nurs 2013:22;45-55.)
+
+### Step 1. Define latent variables 
+
+First of all, let's start from defining the latent variables. You can define latent variables with `=~` operator.
+
+```{r}
+model='
+knowledge =~ general+symptoms+treatmt
+empathy =~ cognitiv+emotion+disposit+attitude
+intervention =~ classrm+instruct
+'
+```
+
+### Step 2. Define the mediation effect
+
+You can define mediation effects using the makeEquation() function. Here the `knowledge` is an independent variable(X) and `intervention` is a response variable(Y) and `empathy` is a mediator(M).
+
+```{r,comment=NA}
+mediationModel=makeEquation(X="knowledge",M="empathy",Y="intervention")
+cat(mediationModel)
+```
+
+You can add this mediation effects to the model. The final model is as follows.
+```{r,comment=NA}
+model=paste0(model,mediationModel)
+cat(model)
+```
+
+### Step 3. Fit the model
+
+You can fit this model by using the lavaan::sem() function.
+```{r,comment=NA}
+fit=sem(model,data=ADHD)
+summary(fit,standardized= TRUE ,fit.measures= FALSE ,rsquare= FALSE ,modindices= FALSE )
+```
+### Step 4. Draw a plot
+
+You can draw figure using semPlot::semPaths() function. Alternatively, you can draw a plot with semMediation::mediationPlot().  
+
+```{r,fig.width=9,fig.height=7}
+semPaths(fit,rotation=2,whatLabels = "std")
+#mediationPlot(fit,whatLabels = "name",residuals=FALSE)
+mediationPlot(fit,whatLabels = "std",residuals = FALSE,base_size=3)
+```
+
+### Step 5. Draw a correlation plot
+
+You can draw correlation plot by CorPlot function
+
+```{r,fig.width=9,fig.height=7,message=FALSE}
+require(mycor)
+require(ggplot2)
+
+CorPlot(fit)
+```
+
+### Step 6. Make a model fit measures table
+
+
+You can make a table summarizing model fit measures.
+
+```{r}
+result=modelFitTable(fit)
+df2Flextable(result)
+```
+
+### Step 7. Make a estimates table 
+
+```{r}
+result=estimatesTable(fit,ci=TRUE)
+df2Flextable(result)
+```
+
+### Step 8. Make a mediation effects  table 
+```{r}
+result=estimatesTable(fit,mediation=TRUE,ci=TRUE)
+df2Flextable(result)
+```
+
+You can draw direct and indirect effects.
+```{r,fig.width=9,fig.height=7}
+mediationPlot(fit,whatLabels = "std",residuals = FALSE,indirect=TRUE,
+              regression=TRUE,mediationOnly = TRUE)
+```

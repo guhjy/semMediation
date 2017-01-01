@@ -1,0 +1,19 @@
+"0","cat(model)
+"
+"1","# Mediation Effect
+Y1~b1*M1+b2*M2+c1*X1+c2*X2
+Y2~b3*M1+b4*M2+c3*X1+c4*X2
+M1~a1*X1+a2*X2
+M2~a3*X1+a4*X2+d1*M1
+ind1:=a1*b1
+ind2:=a2*b1
+ind3:=a3*b2
+ind4:=a4*b2
+ind5:=a1*b3
+ind6:=a2*b3
+ind7:=a3*b4
+ind8:=a4*b4
+secondInd1:=a1*d1*b2+a2*d1*b2
+secondInd2:=a1*d1*b4+a2*d1*b4
+total1:=c1+c2+a1*b1+a2*b1+a3*b2+a4*b2+a1*d1*b2+a2*d1*b2
+total2:=c3+c4+a1*b3+a2*b3+a3*b4+a4*b4+a1*d1*b4+a2*d1*b4"

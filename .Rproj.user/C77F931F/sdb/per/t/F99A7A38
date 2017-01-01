@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "set.seed(1234)\nX <- rnorm(100)\nM1 <- 0.5*X + rnorm(100)\nM2 <-0.6*X + rnorm(100)\nY <- 0.3*M1 + 0.4*M2 + rnorm(100)\ndata <- data.frame(X = X, Y = Y, M1 = M1, M2 = M2)\nstr(data)\nrequire(lavaan)\nrequire(semPlot)\n\nrequire(ggplot2)\nmodel=makeEquation(X=\"X\",M=c(\"M1\",\"M2\"),Y=\"Y\")\ncat(model)\nfit=sem(model,data=data)\nsummary(fit)\npar(family=\"NanumGothic\")\nsemPaths(fit)\n\nmediationPlot(fit)\nmediationPlot(fit,mode=2)\n",
+    "created" : 1482995266534.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2520656233",
+    "id" : "F99A7A38",
+    "lastKnownWriteTime" : 1482996801,
+    "last_content_update" : 1482996801666,
+    "path" : "~/ownCloud/Documents/semMediation/R/Untitled.R",
+    "project_path" : "R/Untitled.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

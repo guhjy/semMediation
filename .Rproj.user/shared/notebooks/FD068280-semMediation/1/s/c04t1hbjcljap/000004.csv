@@ -1,0 +1,19 @@
+"0","require(semPlot)
+require(semPlot)
+require(semMediation)
+require(ggplot2)
+model=makeEquation(X=""X1"",M=c(""M1"",""M2""),Y=""Y1"")
+cat(model)
+"
+"1","# Mediation Effect
+Y1~b1*M1+b2*M2+c1*X1
+M1~a1*X1
+M2~a2*X1+d1*M1
+ind1:=a1*b1
+ind2:=a2*b2
+secondInd1:=a1*d1*b2
+total1:=c1+a1*b1+a2*b2+a1*d1*b2"
+"0","fit=sem(model,data=data)"
+"2","Error in lavData(data = data, group = group, group.label = group.label,  : 
+  lavaan ERROR: data object of class function
+"

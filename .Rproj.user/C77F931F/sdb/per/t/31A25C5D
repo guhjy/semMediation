@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Package semMediation\"\nauthor: \"Keon-Woong Moon\"\ndate: \"2016-08-07\"\noutput: rmarkdown::html_vignette\nvignette: >\n  %\\VignetteIndexEntry{Vignette Title}\n  %\\VignetteEngine{knitr::rmarkdown}\n  %\\VignetteEncoding{UTF-8}\n---\n\nPackage semMediation is an extension of package lavaan. The main functions of package semMediation are as follows:\n\n1. makeEquation() : support function to make a mediation equations easily for lavaan.\n2. mediationPlot() : visualize the mediation effects\n\n## Installation\n\nYou can install `semMediation` package via github.\n\n\n```{r,eval=FALSE}\ninstall.packages(\"devtools\")\ndevtools::install_github(\"cardiomoon/semMediation\")\n```\n\n## makeEquation()\n\nConsider a classical mediation setup with four variables: Y is the dependent variable, X is the predictor, and M1 and M2 are mediators. For illustration, we create a toy dataset containing these four variables, and fit a path analysis model that includes the direct effect of X on Y and the indirect effect of X on Y via M1 or M2 and second indirect effect via M1 and M2.\n\n\n```{r,comment=NA}\nset.seed(1234)\nX <- rnorm(100)\nM1 <- 0.5*X + rnorm(100)\nM2 <-0.6*X + rnorm(100)\nY <- 0.3*M1 + 0.4*M2 + rnorm(100)\ndata <- data.frame(X = X, Y = Y, M1 = M1, M2 = M2)\nstr(data)\n```\n\n\nTo make a mediatino equation, you can use makeEquation() function.\n\n\n```{r,comment=NA,message=FALSE}\nrequire(lavaan)\nrequire(semPlot)\nrequire(semMediation)\nmodel=makeEquation(X=\"X\",M=c(\"M1\",\"M2\"),Y=\"Y\")\ncat(model)\nfit=sem(model,data=data)\nsummary(fit)\n```\n\n\nTo visualize model, you can use semPaths() function from semPlot package. But, semPaths() function is inappropriate for models with two or more mediators.\n\n\n```{r,fig.width=9,fig.height=7}\npar(family=\"NanumGothic\")\nsemPaths(fit)\n```\n\nmediationPlot() can visualize models with multiple mediators, multiple independent variables and/or multiple dependent variables.\n\n\n```{r,fig.width=9,fig.height=7}\nmediationPlot(fit)\n```\n\nYou can show standardized parameter estimates(default) or parameter estimates(est), or names(name) by settting the parameter \"whatLabels\".\n\n```{r,fig.width=9,fig.height=7}\nmediationPlot(fit,whatLabels = \"name\")\nmediationPlot(fit,whatLabels = \"est\")\n```\n\nYou can visualize indirect effects of this model. \n```{r,fig.width=9,fig.height=7}\nmediationPlot(fit,regression=FALSE,correlation=FALSE,indirect=TRUE)\n```\n\nYou can also visualize seconary indirect effect of this model. \n\n\n```{r,fig.width=9,fig.height=7}\nmediationPlot(fit,regression=FALSE,correlation=FALSE,secondIndirect=TRUE)\n```\n",
+    "created" : 1482890096878.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3399059562",
+    "id" : "31A25C5D",
+    "lastKnownWriteTime" : 1482900257,
+    "last_content_update" : 1482900257810,
+    "path" : "~/ownCloud/Documents/semMediation/vignettes/semMediation.Rmd",
+    "project_path" : "vignettes/semMediation.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

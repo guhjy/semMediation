@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "require(stringr)\nequation='\nknowledge =~ general + symptoms + treatmt\nempathy =~ cognitiv+emotion+disposit+attitude\nintervention =~ classrm+instruct\nintervention ~ b*empathy + c*knowledge\nempathy ~ a*knowledge\nindirect effect:=a*b\ntotal effect:=c+(a*b)\n'\n\nequation2='\nintervention ~ b*empathy + c*knowledge\nempathy ~ a*knowledge\nindirect effect:=a*b\ntotal effect:=c+(a*b)\n'\n\neq2latentvars=function(equation){\n\n    vars=c()\n    latent=c()\n   subequation=unlist(strsplit(equation,\"\\n\",fixed=TRUE))\n   count=length(subequation)\n   if(count>1){\n       for(i in 1:count){\n           if(nchar(subequation[i])==0) next\n           string=unlist(strsplit(subequation[i],\"=~\",fixed=TRUE))\n           string=str_trim(string)\n           if(length(string)==2){\n                vars=c(vars,string[1])\n                latent=c(latent,TRUE)\n                # tempvars=unlist(strsplit(string[2],\"+\",fixed=TRUE))\n                # tempvars=str_trim(tempvars)\n                # if(length(tempvars)>0) for(j in 1:length(tempvars)){\n                #     vars=c(vars,tempvars[j])\n                #     latent=c(latent,FALSE)\n                # }\n           }\n       }\n   }\n   df=data.frame(vars,latent)\n   df\n}\n\neq2latentvars(equation2)\nADHD=read.csv(\"ADHD.csv\")\nrequire(lavaan)\nfit=sem(equation,data=ADHD)\nres=parameterEstimates(fit,standardized=TRUE)\nres\nfit2df(fit)\n\nfit2df=function(fit){\n    res=parameterEstimates(fit,standardized=TRUE)\n    res\n    ## latent variable\n    res1=res[res$op!=\":=\",]\n    res1\n    text<-group<-x<-y<-latent<-c()\n    count=0\n    res1\n    for(i in 1:nrow(res1)){\n\n        temp=res1$lhs[i]\n        temp\n        if(!(temp %in% text)){\n            text=c(text,temp)\n            # whether temp is a latent varible\n            tempres=any(res1[res1$lhs==temp,]$op==\"=~\")\n            latent<-c(latent,tempres)\n            # group determination #\n            (tempgroup=seekGroup(temp,res1,group))\n\n            group=c(group,tempgroup)\n\n        }\n    }\n    group\n    df=data.frame(text,latent,group,stringsAsFactors = FALSE)\n    df=addHpos(df)\n    df\n}\n",
+    "created" : 1482889866543.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3965030431",
+    "id" : "7AD2D00",
+    "lastKnownWriteTime" : 1482882539,
+    "last_content_update" : 1482882539,
+    "path" : "~/ownCloud/Documents/semMediation/R/semstrPlot.R",
+    "project_path" : "R/semstrPlot.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

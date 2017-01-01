@@ -1,0 +1,11 @@
+"0","cat(model)
+"
+"1","
+knowledge =~ general+symptoms+treatmt
+empathy =~ cognitiv+emotion+disposit+attitude
+intervention =~ classrm+instruct
+# Mediation Effect
+intervention~b1*empathy+c1*knowledge
+empathy~a1*knowledge
+ind1:=a1*b1
+total1:=c1+a1*b1"

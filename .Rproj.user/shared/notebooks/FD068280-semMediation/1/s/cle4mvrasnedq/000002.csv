@@ -1,0 +1,329 @@
+"0","devtools::install_github(""cardiomoon/semMediation"")
+"
+"2","Downloading GitHub repo cardiomoon/semMediation@master
+from URL https://api.github.com/repos/cardiomoon/semMediation/zipball/master
+"
+"2","Installing semMediation
+"
+"2","URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/lavaan_0.5-22.tgz'을 시도합니다
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 865311 bytes (845 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 845 KB
+
+"
+"2","Installing lavaan
+"
+"2","URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/mnormt_1.5-5.tgz'을 시도합니다
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 89235 bytes (87 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 87 KB
+
+"
+"2","Installing mnormt
+"
+"2","'/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file --no-environ --no-save  \
+  --no-restore --quiet CMD INSTALL  \
+  '/private/var/folders/rq/m6p0rzhs137f5n40w2tgh6kr0000gn/T/Rtmptd2cDk/devtools18a624221541/mnormt'  \
+  --library='/Library/Frameworks/R.framework/Versions/3.3/Resources/library'  \
+  --install-tests 
+"
+"2","
+"
+"2","* installing *binary* package ‘mnormt’ ...
+"
+"2","* DONE (mnormt)
+"
+"2","URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/pbivnorm_0.6.0.tgz'을 시도합니다
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 24915 bytes (24 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 24 KB
+
+"
+"2","Installing pbivnorm
+"
+"2","'/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file --no-environ --no-save  \
+  --no-restore --quiet CMD INSTALL  \
+  '/private/var/folders/rq/m6p0rzhs137f5n40w2tgh6kr0000gn/T/Rtmptd2cDk/devtools18a633f0198f/pbivnorm'  \
+  --library='/Library/Frameworks/R.framework/Versions/3.3/Resources/library'  \
+  --install-tests 
+"
+"2","
+"
+"2","* installing *binary* package ‘pbivnorm’ ...
+"
+"2","* DONE (pbivnorm)
+"
+"2","URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/quadprog_1.5-5.tgz'을 시도합니다
+"
+"2","Content type 'application/x-gzip'"
+"2"," length 37393 bytes (36 KB)
+"
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","="
+"2","
+"
+"2","downloaded 36 KB
+
+"
+"2","Installing quadprog
+"
+"2","'/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file --no-environ --no-save  \
+  --no-restore --quiet CMD INSTALL  \
+  '/private/var/folders/rq/m6p0rzhs137f5n40w2tgh6kr0000gn/T/Rtmptd2cDk/devtools18a6642958c9/quadprog'  \
+  --library='/Library/Frameworks/R.framework/Versions/3.3/Resources/library'  \
+  --install-tests 
+"
+"2","
+"
+"2","* installing *binary* package ‘quadprog’ ...
+"
+"2","* DONE (quadprog)
+"
+"2","'/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file --no-environ --no-save  \
+  --no-restore --quiet CMD INSTALL  \
+  '/private/var/folders/rq/m6p0rzhs137f5n40w2tgh6kr0000gn/T/Rtmptd2cDk/devtools18a66e8fba72/lavaan'  \
+  --library='/Library/Frameworks/R.framework/Versions/3.3/Resources/library'  \
+  --install-tests 
+"
+"2","
+"
+"2","* installing *binary* package ‘lavaan’ ...
+"
+"2","* DONE (lavaan)
+"
+"2","'/Library/Frameworks/R.framework/Resources/bin/R' --no-site-file --no-environ --no-save  \
+  --no-restore --quiet CMD INSTALL  \
+  '/private/var/folders/rq/m6p0rzhs137f5n40w2tgh6kr0000gn/T/Rtmptd2cDk/devtools18a614ca510f/cardiomoon-semMediation-a450fa5'  \
+  --library='/Library/Frameworks/R.framework/Versions/3.3/Resources/library'  \
+  --install-tests 
+"
+"2","
+"
+"2","* installing *source* package ‘semMediation’ ...
+"
+"2","** R
+"
+"2","** preparing package for lazy loading
+"
+"2","** help
+"
+"2","*** installing help indices
+"
+"2","** building package indices
+"
+"2","** installing vignettes
+"
+"2","** testing if installed package can be loaded
+"
+"2","* DONE (semMediation)
+"
