@@ -4,12 +4,23 @@
 \alias{df2Flextable}
 \title{convert data.frame to Flextable}
 \usage{
-df2Flextable(df, bg = "#5B7778")
+df2Flextable(df, vanilla = FALSE, bg = "#5B7778", add.rownames = FALSE,
+  mode = "html", parRight = FALSE, widths = NULL)
 }
 \arguments{
 \item{df}{a data.frame}
 
+\item{vanilla}{Logical. If true, vanilla.table is returned}
+
 \item{bg}{background color of header}
+
+\item{add.rownames}{logical value - should the row.names be included in the table.}
+
+\item{mode}{string. Choices are c("html","pptx").}
+
+\item{parRight}{logical - Whether the values aligned to the right}
+
+\item{widths}{numeric vector}
 }
 \value{
 A Flextable

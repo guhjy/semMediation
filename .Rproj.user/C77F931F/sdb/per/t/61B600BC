@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "Package: semMediation\nType: Package\nTitle: Visualize the Mediation Effect for Structural Equation Modelling\nVersion: 0.1.0\nAuthor: Keon-Woong Moon<cardiomoon@gmail.com>\nMaintainer: Keon-Woong Moon<cardiomoon@gmail.com>\nImports: lavaan,\n         ggplot2,\n         semPlot,\n         plyr\nDescription: Make a mediation plot to visualize the mediation effects for a structural equation modelling(SEM).\nLicense: GPL-2\nLazyData: TRUE\nRoxygenNote: 5.0.1\nSuggests: knitr,\n    rmarkdown\nVignetteBuilder: knitr\n",
+    "contents" : "Package: semMediation\nType: Package\nTitle: Visualize the Mediation Effect for Structural Equation Modelling\nVersion: 0.1.0\nAuthor: Keon-Woong Moon<cardiomoon@gmail.com>\nDepends: R (>= 2.10)\nMaintainer: Keon-Woong Moon<cardiomoon@gmail.com>\nImports: lavaan,\n         ggplot2,\n         semPlot,\n         plyr,\n         mycor,\n         psych,\n         ReporteRs\nDescription: Make a mediation plot to visualize the mediation effects for a structural equation modelling(SEM).\nLicense: GPL-2\nLazyData: TRUE\nRoxygenNote: 5.0.1\nSuggests: knitr,\n    rmarkdown\nVignetteBuilder: knitr\n",
     "created" : 1482890400738.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2419973326",
+    "hash" : "2761042464",
     "id" : "61B600BC",
-    "lastKnownWriteTime" : 1483060689,
-    "last_content_update" : 1483060689750,
+    "lastKnownWriteTime" : 1484273116,
+    "last_content_update" : 1484273116393,
     "path" : "~/ownCloud/Documents/semMediation/DESCRIPTION",
     "project_path" : "DESCRIPTION",
     "properties" : {

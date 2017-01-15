@@ -15,9 +15,9 @@
 #'@importFrom grid arrow unit
 addline=function(x1=0,y1=0,x2=10,y2=10,height=3,width=5,start="ellipse",end="rect",linetype="solid",size=0.2,colour="black",...){
 
-      # x1=20;y1=26;x2=50;y2=25;start="rect";end="rect";height=5;width=5
-      # linetype="solid";size=0.2;colour="black"
-    # print(x1)
+       # x1=25;y1=15;x2=50;y2=15;start="ellipse";end="rect";height=5;width=5
+       # linetype="solid";size=0.2;colour="black"
+    # # print(x1)
     # print(y1)
     # print(x2)
     # print(y2)
@@ -36,14 +36,14 @@ addline=function(x1=0,y1=0,x2=10,y2=10,height=3,width=5,start="ellipse",end="rec
     }
 
 
-    ggplot(data=data.frame(x=c(-10,10)),aes_string("x"))+
-        add_node(x1,y1,height=height,width=width,geom=start)+
-        add_node(x2,y2,height=height,width=width,geom=end)+
-        # stat_function(fun=fun1)+
-        # stat_function(fun=fun2)+
-        # stat_function(fun=g,colour="red")+
-        xlim(c(min(x1,x2)-10,max(x1,x2)+10))+ylim(c(min(y1,y2)-10,max(y1,y2)+10))+
-        geom_segment(x=xstart,y=ystart,xend=xend,yend=yend,arrow=arrow(angle=20,length=unit(0.3,"cm"),type="closed"))
+    # ggplot(data=data.frame(x=c(-10,10)),aes_string("x"))+
+    #     add_node(x1,y1,height=height,width=width,geom=start)+
+    #     add_node(x2,y2,height=height,width=width,geom=end)+
+    #     # stat_function(fun=fun1)+
+    #     # stat_function(fun=fun2)+
+    #     # stat_function(fun=g,colour="red")+
+    #     xlim(c(min(x1,x2)-10,max(x1,x2)+10))+ylim(c(min(y1,y2)-10,max(y1,y2)+10))+
+    #     geom_segment(x=xstart,y=ystart,xend=xend,yend=yend,arrow=arrow(angle=20,length=unit(0.3,"cm"),type="closed"))
 
 
     # (yend=get_endy(x1,y1,x2,y2,height=height,width=width,end=end))

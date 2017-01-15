@@ -51,9 +51,13 @@ require(lavaan)
 require(semPlot)
 require(semMediation)
 require(ggplot2)
+require(ReporteRs)
 
-model=makeEquation(X="X1",M=c("M1","M2"),Y="Y1")
-cat(model)
+model=
+"X=~X1+X2
+"
+model1=makeEquation(X="X",M=c("M1","M2"),Y="Y1")
+model=paste0(model,model1)
 fit=sem(model,data=data)
 summary(fit)
 ```
@@ -71,7 +75,7 @@ mediationPlot() can visualize models with multiple mediators, multiple independe
 
 
 ```{r,fig.width=9,fig.height=7}
-mediationPlot(fit)
+mediationPlot(fit,width=8,height=4)
 ```
 
 You can show standardized parameter estimates(default) or parameter estimates(est), or names(name) by settting the parameter "whatLabels".
@@ -181,13 +185,23 @@ summary(fit,standardized= TRUE ,fit.measures= FALSE ,rsquare= FALSE ,modindices=
 
 You can draw figure using semPlot::semPaths() function. Alternatively, you can draw a plot with semMediation::mediationPlot().  
 
-```{r,fig.width=9,fig.height=7}
+```{r,fig.width=10,fig.height=7}
 semPaths(fit,rotation=2,whatLabels = "std")
 #mediationPlot(fit,whatLabels = "name",residuals=FALSE)
-mediationPlot(fit,whatLabels = "std",residuals = FALSE,base_size=3)
+mediationPlot(fit,width=8,height=4,whatLabels = "std",residuals = FALSE,base_size=4)
 ```
 
-### Step 5. Draw a correlation plot
+### Step 5. Make a Cronbach alpha table
+
+You can make a table shows a Cronbacha alpha and Guttmans lambda 6.
+
+```{r,warning=FALSE}
+result=fit2alpha(fit)
+df2Flextable(result)
+```
+
+
+### Step 6. Draw a correlation plot
 
 You can draw correlation plot by CorPlot function
 
@@ -195,30 +209,34 @@ You can draw correlation plot by CorPlot function
 require(mycor)
 require(ggplot2)
 
-CorPlot(fit)
+corPlot(fit)
+corTable(fit)
 ```
 
-### Step 6. Make a model fit measures table
+### Step 7. Make a model fit measures table
 
 
 You can make a table summarizing model fit measures.
 
 ```{r}
 result=modelFitTable(fit)
-df2Flextable(result)
+df2Flextable(result,vanilla=TRUE,widths=c(rep(0.5,10),2,1,1))
 ```
 
-### Step 7. Make a estimates table 
+### Step 8. Make an estimates table 
 
 ```{r}
 result=estimatesTable(fit,ci=TRUE)
-df2Flextable(result)
+result
+df2Flextable(result,vanilla=TRUE)
 ```
 
-### Step 8. Make a mediation effects  table 
+### Step 9. Make a mediation effects  table 
 ```{r}
 result=estimatesTable(fit,mediation=TRUE,ci=TRUE)
-df2Flextable(result)
+MyTable=df2Flextable(result,vanilla=TRUE)
+MyTable[result$Variables=='indirect effect',,side='top']=chprop(borderProperties(style='solid'))
+MyTable
 ```
 
 You can draw direct and indirect effects.

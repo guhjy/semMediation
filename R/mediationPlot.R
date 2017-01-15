@@ -17,7 +17,7 @@ fit2df=function(fit){
    count=0
    res1
    for(i in 1:nrow(res1)){
-
+        #i=1
         temp=res1$lhs[i]
         temp
         if(!(temp %in% text)){
@@ -95,17 +95,18 @@ seekGroup1=function(var,res){
      mode<-mode+2
      #print("mode<-mode+2")
    }
-
+    mode
    if(mode==3) {
      tempgroup="M"
   } else if(mode==1) {
        tempgroup="Y"
   } else if(mode==2) tempgroup="X"
-
+  tempgroup
   if(tempgroup==""){
     res5=res[res$op=='=~',]
 
-    if(tofind %in% res5$lhs) tempgroup="Y"
+    #if(tofind %in% res5$lhs) tempgroup="Y"
+    if(tofind %in% res5$lhs) tempgroup="X"
   }
 
    #print(group)
@@ -164,7 +165,8 @@ countM=function(group){
 #'@param  res A data.frame. Result of parameterEstimates function of package lavaan or subset.
 #'@param group A string vector
 seekGroup=function(var,res,group){
-   (result=seekGroup1(var,res))
+   # res=res1;var=temp
+    (result=seekGroup1(var,res))
    if(result=="M"){
        count=countM(group)
        result=paste0(result,count+1)
@@ -511,6 +513,8 @@ mergeDataPos=function(res,df2,whatLabels="est",width=5,height=3){
   x<-y<-xend<-yend<-label<-curvature<-group<-position1<-c()
   x1<-y1<-x2<-y2<-start<-end<-c()
   res
+  xonly=-1
+  if(length(unique(df2$group1))==2) xonly=1
   for(i in 1:nrow(res)){
     tempcurvature=-0.3
     tempx=df2[df2$text==res$rhs[i],]$x
@@ -667,16 +671,18 @@ mergeDataPos=function(res,df2,whatLabels="est",width=5,height=3){
   else res$text=res$est
   if(is.numeric(res$text)) res$text=sprintf("%0.2f",res$text)
   select=((res$op=="~~")&(res$lhs!=res$rhs)&(res$group=="X"))
+  #res[select,]
   if(sum(select)>0){
-      res[select,]$x= res[select,]$x1-width/2
-      res[select,]$xend= res[select,]$x2-width/2
-      res[select,]$curvature=-0.3
-      res[select,]$position=1
+      res[select,]$x= res[select,]$x1+xonly*width/2+xonly*ifelse(res[select,]$start=="rect",0,width*3/10)
+      res[select,]$xend= res[select,]$x2+xonly*width/2+xonly*ifelse(res[select,]$start=="rect",0,width*3/10)
+      res[select,]$curvature=0.3*xonly
+      if(xonly) res[select,]$position=3
+      else res[select,]$position=1
   }
   select=((res$op=="~~")&(res$lhs!=res$rhs)&(res$group=="Y"))
   if(sum(select)>0){
-      res[select,]$x= res[select,]$x1+width/2
-      res[select,]$xend= res[select,]$x2+width/2
+      res[select,]$x= res[select,]$x1+width/2+ifelse(res[select,]$start=="rect",0,width*3/10)
+      res[select,]$xend= res[select,]$x2+width/2+ifelse(res[select,]$start=="rect",0,width*3/10)
       res[select,]$curvature=0.3
       res[select,]$position=3
   }
@@ -837,13 +843,13 @@ theme_clean=function(base_size=12,base_family="NanumGothic"){
 #'
 #'@export
 mediationPlot=function(fit,maxx=60,maxy=30,height=5,width=5,whatLabels="std",useLabel=FALSE,usecolor=TRUE,
-                       clean=TRUE,base_size=5,base_family="Arial",
-                       mediationOnly=FALSE,residuals=TRUE,regression=TRUE,
+                       clean=TRUE,base_size=5,base_family="NanumGothic",
+                       mediationOnly=FALSE,residuals=FALSE,regression=TRUE,
                        indirect=FALSE,secondIndirect=FALSE,total=FALSE,mode=1){
 
    # maxx=60;maxy=30;height=5;width=5;whatLabels="name";useLabel=TRUE;usecolor=TRUE
    # clean=TRUE;base_size=5;base_family="Arial"
-   # mediationOnly=FALSE;correlation=TRUE;regression=TRUE
+   # mediationOnly=FALSE;residuals=TRUE;regression=TRUE
    #  indirect=FALSE;secondIndirect=FALSE;mode=1
 
   res=parameterEstimates(fit,standardized=TRUE)
@@ -920,7 +926,7 @@ mediationPlot=function(fit,maxx=60,maxy=30,height=5,width=5,whatLabels="std",use
             if(whatLabels!="name")
             p<-p+addlabel(x1=resMeasure$x1[i],y1=resMeasure$y1[i],x2=resMeasure$x2[i],y2=resMeasure$y2[i],
                           start=resMeasure$start[i],end=resMeasure$end[i],label=resMeasure$text[i],
-                          useLabel=useLabel)
+                          useLabel=useLabel,size=base_size-1)
         }
         p
   } else{
@@ -929,8 +935,8 @@ mediationPlot=function(fit,maxx=60,maxy=30,height=5,width=5,whatLabels="std",use
                     linetype=resMeasure$linetype,
                     arrow=arrow(angle=20,length=unit(0.3,"cm"),ends="first",type="closed"))
         if(whatLabels!="name"){
-        if(useLabel) p<-p+geom_label(data=resMeasure,aes_string(x="(x+xend)/2",y="(y+yend)/2",label="text"))
-        else p<-p+geom_label(data=resMeasure,aes_string(x="(x+xend)/2",y="(y+yend)/2",label="text"),label.size=0)
+        if(useLabel) p<-p+geom_label(data=resMeasure,aes_string(x="(x+xend)/2",y="(y+yend)/2",label="text"),size=base_size-1)
+        else p<-p+geom_label(data=resMeasure,aes_string(x="(x+xend)/2",y="(y+yend)/2",label="text"),label.size=0,size=base_size-1)
         }
 
   }
@@ -955,10 +961,10 @@ mediationPlot=function(fit,maxx=60,maxy=30,height=5,width=5,whatLabels="std",use
           #i=10
           if(whatLabels=="name"){
               p<-p+addline(x1=resReg$x2[i],y1=resReg$y2[i],x2=resReg$x1[i],y2=resReg$y1[i],
-                           start=resReg$start[i],end=resReg$end[i],height=height,width=width)
+                           start=resReg$end[i],end=resReg$start[i],height=height,width=width)
           } else{
              p<-p+addline(x1=resReg$x2[i],y1=resReg$y2[i],x2=resReg$x1[i],y2=resReg$y1[i],
-                       start=resReg$start[i],end=resReg$end[i],linetype=resReg$linetype[i],height=height,width=width)
+                       start=resReg$end[i],end=resReg$start[i],linetype=resReg$linetype[i],height=height,width=width)
           }
           p
 
@@ -966,8 +972,8 @@ mediationPlot=function(fit,maxx=60,maxy=30,height=5,width=5,whatLabels="std",use
       for(i in 1:nrow(resReg)){
 
           p<-p+addlabel(x1=resReg$x2[i],y1=resReg$y2[i],x2=resReg$x1[i],y2=resReg$y1[i],
-                        start=resReg$start[i],end=resReg$end[i],label=resReg$text[i],
-                        useLabel=useLabel)
+                        start=resReg$end[i],end=resReg$start[i],label=resReg$text[i],
+                        useLabel=useLabel,size=base_size-1)
       }
       p
 
@@ -980,11 +986,11 @@ mediationPlot=function(fit,maxx=60,maxy=30,height=5,width=5,whatLabels="std",use
                   arrow=arrow(angle=20,length=unit(0.3,"cm"),type="closed"))
 
   if(useLabel) {
-      p<-p+geom_label(data=resReg[substr(resReg$label,1,1)!="c",],aes_string(x="(x+xend)/2",y="(y+yend)/2",label="text"))
-      p<-p+geom_label(data=resReg[substr(resReg$label,1,1)=="c",],aes_string(x="(x+xend)/2",y="(y+yend)/2-2",label="text"))
+      p<-p+geom_label(data=resReg[substr(resReg$label,1,1)!="c",],aes_string(x="(x+xend)/2",y="(y+yend)/2",label="text"),size=base_size-1)
+      p<-p+geom_label(data=resReg[substr(resReg$label,1,1)=="c",],aes_string(x="(x+xend)/2",y="(y+yend)/2-2",label="text"),size=base_size-1)
   }else {
-      p<-p+geom_label(data=resReg[substr(resReg$label,1,1)!="c",],aes_string(x="(x+xend)/2",y="(y+yend)/2",label="text"),label.size=0)
-      p<-p+geom_label(data=resReg[substr(resReg$label,1,1)=="c",],aes_string(x="(x+xend)/2",y="(y+yend)/2-2",label="text"),label.size=0)
+      p<-p+geom_label(data=resReg[substr(resReg$label,1,1)!="c",],aes_string(x="(x+xend)/2",y="(y+yend)/2",label="text"),label.size=0,size=base_size-1)
+      p<-p+geom_label(data=resReg[substr(resReg$label,1,1)=="c",],aes_string(x="(x+xend)/2",y="(y+yend)/2-2",label="text"),label.size=0,size=base_size-1)
   }
 
   p
@@ -995,10 +1001,12 @@ mediationPlot=function(fit,maxx=60,maxy=30,height=5,width=5,whatLabels="std",use
   }
 
 
-  if(residuals){
+
     ##  Correlation
     resCor=res[res$op=="~~",]
-
+    if(!residuals) resCor=resCor[resCor$lhs!=resCor$rhs,]
+    resCor
+    df2
     if(nrow(resCor)>0){
       #height=3;width=5;whatLabels="est"
       resCor=mergeDataPos(resCor,df2,whatLabels,height=height,width=width)
@@ -1049,7 +1057,7 @@ mediationPlot=function(fit,maxx=60,maxy=30,height=5,width=5,whatLabels="std",use
       }
          }
     }
-  }
+
 
  p
   ## 2nd Indirect Effect

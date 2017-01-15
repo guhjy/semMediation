@@ -9,8 +9,8 @@ Imports: lavaan,
          ggplot2,
          semPlot,
          plyr,
-         ggiraphExtra,
          mycor,
+         psych,
          ReporteRs
 Description: Make a mediation plot to visualize the mediation effects for a structural equation modelling(SEM).
 License: GPL-2
