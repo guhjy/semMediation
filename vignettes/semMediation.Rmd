@@ -24,6 +24,23 @@ install.packages("devtools")
 devtools::install_github("cardiomoon/semMediation")
 ```
 
+## Confirmative FActor Anlaysis
+
+```{r,fig.width=9,fig.height=7,message=FALSE}
+require(lavaan)
+require(semPlot)
+require(semMediation)
+require(ggplot2)
+require(ReporteRs)
+
+HS.model <- ' visual  =~ x1 + x2 + x3 
+              textual =~ x4 + x5 + x6
+              speed   =~ x7 + x8 + x9 '
+fit <- cfa(HS.model, data = HolzingerSwineford1939)
+semPaths(fit)
+mediationPlot(fit,width=8,residuals=TRUE)
+```
+
 ## makeEquation()
 
 Consider a classical mediation setup with four variables: Y1 is the dependent variable, X1 is the predictor and M1 and M2 are mediators. For illustration, we create a toy dataset containing these variables, and fit a path analysis model that includes the direct effect of X1 on Y1 and the indirect effect of X1 on Y1 via M1 or M2 and second indirect effect via M1 and M2.
@@ -43,16 +60,10 @@ str(data)
 ```
 
 
-To make a mediatino equation, you can use makeEquation() function.
+To make a mediation equation, you can use makeEquation() function.
 
 
 ```{r,comment=NA,message=FALSE}
-require(lavaan)
-require(semPlot)
-require(semMediation)
-require(ggplot2)
-require(ReporteRs)
-
 model=
 "X=~X1+X2
 "
@@ -113,6 +124,20 @@ mediationPlot(fit)
 
 ##  Example 3
 
+You can extend model with two predictors, two mediators and one response variable.
+
+```{r,comment=NA}
+model=makeEquation(X=c("X1","X2"),M="M1",Y="Y1")
+cat(model)
+fit=sem(model,data=data)
+```
+```{r,fig.width=9,fig.height=7}
+semPaths(fit)
+mediationPlot(fit)
+```
+
+##  Example 4
+
 You can extend model with two predictors, two mediators and two response variables.
 
 ```{r,comment=NA}
@@ -125,7 +150,7 @@ semPaths(fit)
 mediationPlot(fit)
 ```
 
-## Example 4
+## Example 5
 
 ```{r,fig.width=9,fig.height=7}
 model <- '
@@ -143,7 +168,7 @@ semPaths(fit,rotation=2,whatLabels = "std",groups="manlat",pastel=TRUE)
 mediationPlot(fit)
 ```
 
-## Example 5 
+## Example 6 
 
 Next example is about the teacher's intervention for students with ADHD. The ADHD data contained in semMediation package is a dataset contains measures about the teacher's knowlege, empathy and intervention about attention-deficit hyperactivity disorder(ADHD).(Source:Effects of teacher's knowledge and empathy on educational intervention for ADHD: Focused on the mediating effet of empathy. J Korean Acad Psychiatr Ment Health Nurs 2013:22;45-55.)
 

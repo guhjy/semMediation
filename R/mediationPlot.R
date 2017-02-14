@@ -285,7 +285,7 @@ distributePos=function(start,end,count){
 #'@param maxy maximum y position
 #'@param height A number indicating height of the rectangle
 #'@param width A number indicating width of the rectangle
-adjustPos=function(df,maxx=60,maxy=30,height=3,width=5){
+adjustPos=function(df,maxx=80,maxy=30,height=3,width=5){
 
   #df=df1;maxx=60;maxy=30;height=3;width=5
   df$group3=df$y
@@ -412,6 +412,36 @@ adjustPos=function(df,maxx=60,maxy=30,height=3,width=5){
 
   }
 
+   # unique(df$group1)
+   # ("X" %in% unique(df$group1))&("0" %in% unique(df$group1))
+   # (count=nrow(df[df$group=="X",]))
+   # i=1
+   # (temp=df[df$group=="X",]$text[i])
+   # nrow(df[df$group2==temp])>0
+   # df[df$text==temp,]$y
+   # mean(df[df$group2==temp,]$y)
+   #
+  if(length(unique(df$group1))==2){
+      if(("X" %in% unique(df$group1))&("0" %in% unique(df$group1))){
+          count=nrow(df[df$group=="X",])
+          for(i in 1:count){
+              (temp=df[df$group=="X",]$text[i])
+              if(nrow(df[df$group2==temp,])>0){
+                  df[df$text==temp,]$y=mean(df[df$group2==temp,]$y)
+
+              }
+
+          }
+          df[df$group1=="X",]$x=maxx-15
+          df[df$group1=="0",]$x=15
+      }
+  }
+
+  (xcount=nrow(df[df$group=="X",]))
+  (mcount=nrow(df[df$group %in% c("M1","M2"),]))
+  if((xcount>1)&(mcount==1)){
+      df[df$group=="M1",]$y=mean(df[df$group=="X",]$y)
+  }
   df
 
 }
@@ -842,12 +872,12 @@ theme_clean=function(base_size=12,base_family="NanumGothic"){
 #'@importFrom ggplot2 ggplot geom_rect geom_text theme_gray theme geom_label geom_segment geom_curve geom_text xlim ylim aes_string coord_fixed
 #'
 #'@export
-mediationPlot=function(fit,maxx=60,maxy=30,height=5,width=5,whatLabels="std",useLabel=FALSE,usecolor=TRUE,
+mediationPlot=function(fit,maxx=80,maxy=30,height=5,width=5,whatLabels="std",useLabel=FALSE,usecolor=TRUE,
                        clean=TRUE,base_size=5,base_family="NanumGothic",
                        mediationOnly=FALSE,residuals=FALSE,regression=TRUE,
                        indirect=FALSE,secondIndirect=FALSE,total=FALSE,mode=1){
 
-   # maxx=60;maxy=30;height=5;width=5;whatLabels="name";useLabel=TRUE;usecolor=TRUE
+   # maxx=80;maxy=30;height=5;width=5;whatLabels="name";useLabel=TRUE;usecolor=TRUE
    # clean=TRUE;base_size=5;base_family="Arial"
    # mediationOnly=FALSE;residuals=TRUE;regression=TRUE
    #  indirect=FALSE;secondIndirect=FALSE;mode=1

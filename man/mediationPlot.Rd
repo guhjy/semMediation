@@ -4,7 +4,7 @@
 \alias{mediationPlot}
 \title{Make a data.frame for mediationPlot}
 \usage{
-mediationPlot(fit, maxx = 60, maxy = 30, height = 5, width = 5,
+mediationPlot(fit, maxx = 80, maxy = 30, height = 5, width = 5,
   whatLabels = "std", useLabel = FALSE, usecolor = TRUE, clean = TRUE,
   base_size = 5, base_family = "NanumGothic", mediationOnly = FALSE,
   residuals = FALSE, regression = TRUE, indirect = FALSE,

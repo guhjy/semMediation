@@ -4,7 +4,7 @@
 \alias{adjustPos}
 \title{Adjust position for arrows}
 \usage{
-adjustPos(df, maxx = 60, maxy = 30, height = 3, width = 5)
+adjustPos(df, maxx = 80, maxy = 30, height = 3, width = 5)
 }
 \arguments{
 \item{df}{A data.frame}
